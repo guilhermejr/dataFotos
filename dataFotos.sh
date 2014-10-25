@@ -4,6 +4,12 @@
 # Licença de uso: GPL
 #
 
+# --- Formata data para ser usada no comando ---
+DIA=$(echo $1 | cut -d/ -f 1)
+MES=$(echo $1 | cut -d/ -f 2)
+ANO=$(echo $1 | cut -d/ -f 3)
+DATAFORMATADA="$ANO:$MES:$DIA"
+
 # --- Função para a exibição do erro e sair ---
 erro() {
    local MSG=$1
@@ -35,7 +41,7 @@ if [ ! -d "$PASTA" ]; then
 fi
 
 # --- Modifica a data ---
-exiftool -AllDates=\'"$DATA"\' "$PASTA" 1>/dev/null 2>/dev/null
+exiftool -AllDates=\'"$DATAFORMATADA $2"\' "$PASTA" 1>/dev/null 2>/dev/null
 
 # --- Apaga os arquivos originais ---
 exiftool -delete_original! "$PASTA" 1>/dev/null 2>/dev/null
